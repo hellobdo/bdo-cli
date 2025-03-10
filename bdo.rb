@@ -1,8 +1,8 @@
 class Bdo < Formula
   desc "Collection of helpful shell scripts for Git and GitHub operations"
-  homepage "https://github.com/hellobdo/shell-scripts"
-  url "https://github.com/hellobdo/shell-scripts/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "744917bfde4935e1b6e07f71736f6476a89b4807e3b1cc21a63d3b6980f8bde8"
+  homepage "https://github.com/hellobdo/bdo-cli"
+  url "https://github.com/hellobdo/bdo-cli/archive/refs/tags/v1.0.0.tar.gz"
+  sha256 "5c67911ed56cc628fc88f51d7866b1af0ba3cb452e66ada1bd438ad07ba4c123"
   license "MIT"
   
   depends_on "gh"
