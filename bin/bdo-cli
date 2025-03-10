@@ -1,6 +1,8 @@
 #!/bin/bash
 
 SCRIPTS_DIR="$(dirname "$(dirname "$0")")/scripts"
+PREFIX_FILE="$HOME/.bdo-cli/prefix"
+CLI_PREFIX=$(cat "$PREFIX_FILE" 2>/dev/null || echo "bdo")
 
 # Colors for output
 RED='\033[0;31m'
@@ -19,20 +21,20 @@ check_node() {
 # Show help message
 show_help() {
     echo "Available commands:"
-    echo "  create <repo-name> - Create and initialize a new repository"
-    echo "  push - Add, commit, and push changes"
-    echo "  branch <branch-name> - Create and push a new branch"
-    echo "  react - Create a Vite React app"
-    echo "  checkout - Reset to match remote main branch"
-    echo "  create-react - Create a directory with a Vite React app"
-    echo "  vitest - Setup Vitest in a React project"
-    echo "  help - Show this help message"
+    echo "  $CLI_PREFIX create <repo-name> - Create and initialize a new repository"
+    echo "  $CLI_PREFIX push - Add, commit, and push changes"
+    echo "  $CLI_PREFIX branch <branch-name> - Create and push a new branch"
+    echo "  $CLI_PREFIX react - Create a Vite React app"
+    echo "  $CLI_PREFIX checkout - Reset to match remote main branch"
+    echo "  $CLI_PREFIX create-react - Create a directory with a Vite React app"
+    echo "  $CLI_PREFIX vitest - Setup Vitest in a React project"
+    echo "  $CLI_PREFIX help - Show this help message"
 }
 
 case "$1" in
     "create")
         if [ -z "$2" ]; then
-            echo "Usage: bdo create <repo-name>"
+            echo "Usage: $CLI_PREFIX create <repo-name>"
             exit 1
         fi
         bash "$SCRIPTS_DIR/create.sh" "${@:2}"
@@ -42,7 +44,7 @@ case "$1" in
         ;;
     "branch")
         if [ -z "$2" ]; then
-            echo "Usage: bdo branch <branch-name>"
+            echo "Usage: $CLI_PREFIX branch <branch-name>"
             exit 1
         fi
         bash "$SCRIPTS_DIR/branch.sh" "${@:2}"
@@ -50,7 +52,7 @@ case "$1" in
     "react")
         check_node
         if [ -z "$2" ]; then
-            echo "Usage: bdo react <app-name>"
+            echo "Usage: $CLI_PREFIX react <app-name>"
             exit 1
         fi
         bash "$SCRIPTS_DIR/react.sh" "${@:2}"
@@ -71,7 +73,7 @@ case "$1" in
         ;;
     *)
         echo -e "${RED}Unknown command: $1${NC}"
-        echo "Run 'bdo-cli help' to see available commands"
+        echo "Run '$CLI_PREFIX help' to see available commands"
         exit 1
         ;;
 esac 

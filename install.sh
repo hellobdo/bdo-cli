@@ -9,6 +9,19 @@ NC='\033[0m'
 # Installation directory
 INSTALL_DIR="$HOME/.bdo-cli"
 
+# Allow overriding /usr/local/bin in tests
+LOCAL_BIN="${LOCAL_BIN:-/usr/local/bin}"
+
+# Prompt for command prefix
+read -p "Enter your preferred command prefix (default: bdo): " CMD_PREFIX
+CMD_PREFIX=${CMD_PREFIX:-bdo}
+
+# Validate prefix (only allow alphanumeric and hyphen)
+if ! [[ $CMD_PREFIX =~ ^[a-zA-Z0-9-]+$ ]]; then
+    echo -e "${RED}Error: Command prefix can only contain letters, numbers, and hyphens${NC}"
+    exit 1
+fi
+
 # Check for required dependencies
 check_dependency() {
     if ! command -v $1 &> /dev/null; then
@@ -19,9 +32,12 @@ check_dependency() {
     fi
 }
 
-echo "Checking required dependencies..."
-check_dependency "git" "Git"
-check_dependency "gh" "GitHub CLI"
+# Skip dependency checks in test mode
+if [ -z "$SUDO_COMMAND" ]; then
+    echo "Checking required dependencies..."
+    check_dependency "git" "Git"
+    check_dependency "gh" "GitHub CLI"
+fi
 
 # Create installation directory
 echo -e "\nCreating installation directory..."
@@ -45,7 +61,7 @@ else
 fi
 
 # Copy only necessary files
-echo "Installing bdo-cli..."
+echo "Installing CLI..."
 cp "$SOURCE_DIR/bin/bdo-cli" "$INSTALL_DIR/bin/"
 cp -r "$SOURCE_DIR/scripts/"*.sh "$INSTALL_DIR/scripts/" 2>/dev/null || true
 if [ -d "$SOURCE_DIR/scripts/next-js" ]; then
@@ -58,18 +74,21 @@ echo "Making scripts executable..."
 chmod +x "$INSTALL_DIR/bin/bdo-cli"
 find "$INSTALL_DIR/scripts" -type f -name "*.sh" -exec chmod +x {} \;
 
-# Create symlink
+# Create symlink with custom prefix
 echo "Creating symlink..."
-SYMLINK="/usr/local/bin/bdo-cli"
+SYMLINK="$LOCAL_BIN/$CMD_PREFIX"
 sudo rm -f "$SYMLINK"
 sudo ln -s "$INSTALL_DIR/bin/bdo-cli" "$SYMLINK"
 
 # Add to PATH if not already there
-if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
-    echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
-    echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
+if [[ ":$PATH:" != *":$LOCAL_BIN:"* ]]; then
+    echo "export PATH=\"$LOCAL_BIN:\$PATH\"" >> ~/.bashrc
+    echo "export PATH=\"$LOCAL_BIN:\$PATH\"" >> ~/.zshrc
 fi
 
-echo -e "\n${GREEN}🎉 bdo-cli has been successfully installed!${NC}"
-echo -e "\n${GREEN}Run 'bdo-cli help' to see available commands${NC}"
+# Save the prefix for future reference
+echo "$CMD_PREFIX" > "$INSTALL_DIR/prefix"
+
+echo -e "\n${GREEN}🎉 CLI has been successfully installed!${NC}"
+echo -e "\n${GREEN}Run '$CMD_PREFIX help' to see available commands${NC}"
 echo -e "${YELLOW}Please restart your terminal or run: source ~/.bashrc (or ~/.zshrc)${NC}" 

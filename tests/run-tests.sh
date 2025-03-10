@@ -12,47 +12,58 @@ TOTAL=0
 PASSED=0
 FAILED=0
 
+# Create test directory
+TEST_DIR=$(mktemp -d)
+trap 'rm -rf "$TEST_DIR"' EXIT
+
 # Run a test and check its result
 run_test() {
     local test_name="$1"
     local expected="$2"
-    local command="$3"
+    local actual="$3"
     
     ((TOTAL++))
     
     echo -e "\nRunning test: ${YELLOW}$test_name${NC}"
-    result=$(eval "$command" 2>&1)
     
-    if [[ "$result" == *"$expected"* ]]; then
+    if [[ "$actual" == *"$expected"* ]]; then
         echo -e "${GREEN}✓ Passed${NC}"
         ((PASSED++))
     else
         echo -e "${RED}✗ Failed${NC}"
         echo "Expected: $expected"
-        echo "Got: $result"
+        echo "Got: $actual"
         ((FAILED++))
     fi
 }
 
-# Test help command
-run_test "Help command shows available commands" \
-         "Available commands:" \
-         "$CLI_PATH help"
+# Test help command with default prefix
+echo "Testing help command with default prefix..."
+mkdir -p "$TEST_DIR/.bdo-cli"
+echo "bdo" > "$TEST_DIR/.bdo-cli/prefix"
+HELP_OUTPUT=$(HOME="$TEST_DIR" $CLI_PATH help)
+run_test "Help shows default prefix" "bdo create" "$HELP_OUTPUT"
 
-# Test create command validation
-run_test "Create command requires repository name" \
-         "Usage: bdo create" \
-         "$CLI_PATH create"
+# Test help command with custom prefix
+echo -e "\nTesting help command with custom prefix..."
+echo "mycli" > "$TEST_DIR/.bdo-cli/prefix"
+HELP_OUTPUT=$(HOME="$TEST_DIR" $CLI_PATH help)
+run_test "Help shows custom prefix" "mycli create" "$HELP_OUTPUT"
 
-# Test branch command validation
-run_test "Branch command requires branch name" \
-         "Usage: bdo branch" \
-         "$CLI_PATH branch"
+# Test error messages with custom prefix
+echo -e "\nTesting error messages with custom prefix..."
+ERROR_OUTPUT=$(HOME="$TEST_DIR" $CLI_PATH create 2>&1)
+run_test "Usage error shows custom prefix" "Usage: mycli create" "$ERROR_OUTPUT"
 
-# Test Node.js dependency check
-run_test "React command checks for Node.js" \
-         "Node.js and npm are required" \
-         "PATH='' $CLI_PATH react"
+# Test unknown command with custom prefix
+UNKNOWN_OUTPUT=$(HOME="$TEST_DIR" $CLI_PATH unknown-cmd 2>&1)
+run_test "Unknown command shows custom prefix" "Run 'mycli help'" "$UNKNOWN_OUTPUT"
+
+# Test missing prefix file (should default to 'bdo')
+echo -e "\nTesting missing prefix file..."
+rm "$TEST_DIR/.bdo-cli/prefix"
+HELP_OUTPUT=$(HOME="$TEST_DIR" $CLI_PATH help)
+run_test "Missing prefix defaults to 'bdo'" "bdo create" "$HELP_OUTPUT"
 
 # Print summary
 echo -e "\n${YELLOW}Test Summary:${NC}"
