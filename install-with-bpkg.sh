@@ -24,6 +24,12 @@ if ! command -v gh &> /dev/null; then
     exit 1
 fi
 
+# Ask for custom command name
+echo -e "${YELLOW}Choose a command name for the CLI tool:${NC}"
+read -p "Command name [bdo]: " COMMAND_NAME
+COMMAND_NAME=${COMMAND_NAME:-bdo}
+echo -e "Will install as: ${GREEN}${COMMAND_NAME}${NC}"
+
 # Step 1: Check if bpkg is installed
 if ! command -v bpkg &> /dev/null; then
     echo -e "${YELLOW}bpkg not found. Installing bpkg...${NC}"
@@ -45,15 +51,15 @@ fi
 
 # Step 2: Install bdo-cli using bpkg
 echo -e "\n${YELLOW}Installing bdo-cli...${NC}"
-bpkg install ${GITHUB_USER}/${REPO_NAME} -g
+bpkg install ${GITHUB_USER}/${REPO_NAME} -g COMMAND_NAME=${COMMAND_NAME}
 
 # Step 3: Verify the installation
-if command -v bdo &> /dev/null; then
-    echo -e "\n${GREEN}🎉 bdo-cli has been successfully installed!${NC}"
-    echo -e "${YELLOW}Try running: ${GREEN}bdo help${NC}"
+if command -v ${COMMAND_NAME} &> /dev/null; then
+    echo -e "\n${GREEN}🎉 bdo-cli has been successfully installed as '${COMMAND_NAME}'!${NC}"
+    echo -e "${YELLOW}Try running: ${GREEN}${COMMAND_NAME} help${NC}"
 else
     echo -e "\n${RED}❌ Installation may have failed. Please check the output above for errors.${NC}"
     echo -e "${YELLOW}You can try installing manually:${NC}"
-    echo -e "bpkg install ${GITHUB_USER}/${REPO_NAME} -g"
+    echo -e "bpkg install ${GITHUB_USER}/${REPO_NAME} -g COMMAND_NAME=${COMMAND_NAME}"
     exit 1
 fi

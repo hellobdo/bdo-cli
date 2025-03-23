@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Set command name and scripts directory
-CLI_NAME="bdo"
+# Get command name from the script's own filename
+CLI_NAME=$(basename "$0")
 # bpkg sets PREFIX environment variable during installation
 # Default to ~/.local if not set
 SCRIPTS_DIR="${PREFIX:-$HOME/.local}/lib/bdo-cli/scripts"

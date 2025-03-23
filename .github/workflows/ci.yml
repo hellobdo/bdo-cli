@@ -52,29 +52,44 @@ jobs:
           && sudo apt update \
           && sudo apt install gh -y
       
-      - name: Install CLI directly
-        run: bpkg install hellobdo/bdo-cli -g
+      - name: Install CLI with custom command name
+        run: |
+          # Use a custom command name for testing
+          CUSTOM_CMD="cli-test"
+          bpkg install hellobdo/bdo-cli -g COMMAND_NAME=${CUSTOM_CMD}
+          echo "Using custom command: ${CUSTOM_CMD}"
+          echo "CUSTOM_CMD=${CUSTOM_CMD}" >> $GITHUB_ENV
       
       - name: Test CLI basic functionality
         run: |
           export PATH=$PATH:/usr/local/bin
-          bdo help || echo "Failed to run bdo help"
+          ${CUSTOM_CMD} help || echo "Failed to run ${CUSTOM_CMD} help"
           
-      - name: Test CLI removal functionality
+      - name: Test CLI removal
         run: |
-          echo "y" | bdo remove
-          if command -v bdo &> /dev/null; then
-            echo "Error: bdo command still exists after removal"
+          # Test removal with the remove.sh script directly
+          # Passing 'y' to automatically confirm removal
+          echo "Using the remove.sh script to uninstall ${CUSTOM_CMD}"
+          echo "y" | ${CUSTOM_CMD} remove
+          
+          # Verify removal
+          if command -v ${CUSTOM_CMD} &> /dev/null; then
+            echo "Error: ${CUSTOM_CMD} command still exists after removal"
             exit 1
           else
-            echo "✅ bdo-cli successfully removed"
+            echo "✅ CLI executable successfully removed"
           fi
           
-          if [ -d "$HOME/.local/lib/bdo-cli" ]; then
+          # Check for lib directory
+          # We need to determine where it was installed
+          PREFIX_DIR="${HOME}/.local"  # Default bpkg location
+          LIB_DIR="${PREFIX_DIR}/lib/bdo-cli"
+          
+          if [ -d "$LIB_DIR" ]; then
             echo "Error: bdo-cli library directory still exists after removal"
             exit 1
           else
-            echo "✅ bdo-cli library directory successfully removed"
+            echo "✅ CLI library directory successfully removed"
           fi
           
   publish:
