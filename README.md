@@ -7,14 +7,7 @@ BDO CLI provides a collection of helpful shell scripts for Git, GitHub, and deve
 ```bash
 # One-line installer (installs bpkg if needed)
 curl -Lo- https://raw.githubusercontent.com/hellobdo/bdo-cli/main/install-with-bpkg.sh | bash
-```
-
-You can also specify a custom command name during installation:
-
-```bash
-# Manual installation with custom command name
-bpkg install hellobdo/bdo-cli -g COMMAND_NAME=mycli
-```
+``
 
 ## Requirements
 
