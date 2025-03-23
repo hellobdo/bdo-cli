@@ -4,6 +4,20 @@ BDO CLI provides a collection of helpful shell scripts for Git, GitHub, and deve
 
 ## Installation
 
+```bash
+# One-line installer (installs bpkg if needed)
+curl -Lo- https://raw.githubusercontent.com/hellobdo/bdo-cli/main/install-with-bpkg.sh | bash
+```
+
+## Uninstallation
+
+To remove bdo-cli from your system:
+
+```bash
+# Uninstall using bpkg
+bpkg drop bdo-cli -g
+```
+
 ## Requirements
 
 Before installing, ensure you have the following prerequisites:
@@ -14,8 +28,7 @@ These tools must be installed on your system before attempting to install bdo-cl
 
 ## Available Commands
 
-### Core Commands (no additional dependencies)
-- `bdo list` - Show all available commands
+- `bdo help` - Show all available commands
 - `bdo create <repo-name>` - Create and initialize a new repository
 - `bdo push` - Add, commit, and push changes
 - `bdo branch <branch-name>` - Create and push a new branch

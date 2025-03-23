@@ -2,7 +2,9 @@
 
 # Set command name and scripts directory
 CLI_NAME="bdo"
-SCRIPTS_DIR="/usr/local/lib/bdo-cli/scripts"
+# bpkg sets PREFIX environment variable during installation
+# Default to ~/.local if not set
+SCRIPTS_DIR="${PREFIX:-$HOME/.local}/lib/bdo-cli/scripts"
 
 # Colors for output
 RED='\033[0;31m'
