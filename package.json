@@ -8,12 +8,8 @@
     "scripts/create.sh",
     "scripts/push.sh",
     "scripts/branch.sh",
-    "scripts/checkout.sh"
-  ],
-  "files": [
-    "bin/bdo-cli",
-    "scripts",
-    "Makefile"
+    "scripts/checkout.sh",
+    "scripts/remove.sh"
   ],
   "dependencies": {},
   "homepage": "https://github.com/hellobdo/bdo-cli",

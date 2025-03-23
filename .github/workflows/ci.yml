@@ -52,13 +52,14 @@ jobs:
           && sudo apt update \
           && sudo apt install gh -y
       
-      - name: Install CLI directly
+      - name: Install CLI with bpkg
         run: bpkg install hellobdo/bdo-cli -g
       
       - name: Test CLI basic functionality
         run: |
-          export PATH=$PATH:/usr/local/bin
-          bdo help || echo "Failed to run bdo help"
+            echo "Current PATH: $PATH"
+            which bdo || echo "bdo command not found in PATH"
+            bdo help || echo "Failed to run bdo help"
           
       - name: Test CLI removal functionality
         run: |
