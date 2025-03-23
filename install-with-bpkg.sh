@@ -12,6 +12,18 @@ REPO_NAME="bdo-cli"
 
 echo -e "${YELLOW}Installing bdo-cli using bpkg...${NC}"
 
+# Check for Git
+if ! command -v git &> /dev/null; then
+    echo -e "${RED}Git is required but not installed.${NC}"
+    exit 1
+fi
+
+# Check for GitHub CLI
+if ! command -v gh &> /dev/null; then
+    echo -e "${RED}GitHub CLI is required but not installed.${NC}"
+    exit 1
+fi
+
 # Step 1: Check if bpkg is installed
 if ! command -v bpkg &> /dev/null; then
     echo -e "${YELLOW}bpkg not found. Installing bpkg...${NC}"
@@ -35,25 +47,7 @@ fi
 echo -e "\n${YELLOW}Installing bdo-cli...${NC}"
 bpkg install ${GITHUB_USER}/${REPO_NAME} -g
 
-# Step 3: Check and install dependencies using bpkg getdeps
-echo -e "\n${YELLOW}Checking for dependencies...${NC}"
-if command -v bpkg &> /dev/null; then
-    echo -e "${YELLOW}Installing dependencies with bpkg getdeps...${NC}"
-    # Run bpkg getdeps to recursively install all dependencies
-    bpkg getdeps ${GITHUB_USER}/${REPO_NAME}
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✅ Dependencies installed successfully${NC}"
-    else
-        echo -e "${RED}⚠️ There was an issue installing dependencies${NC}"
-        echo -e "${YELLOW}You can try installing dependencies manually:${NC}"
-        echo -e "bpkg getdeps ${GITHUB_USER}/${REPO_NAME}"
-        # Continue with installation even if dependencies failed
-    fi
-else
-    echo -e "${RED}❌ Cannot install dependencies: bpkg is not available${NC}"
-fi
-
-# Step 4: Verify the installation
+# Step 3: Verify the installation
 if command -v bdo &> /dev/null; then
     echo -e "\n${GREEN}🎉 bdo-cli has been successfully installed!${NC}"
     echo -e "${YELLOW}Try running: ${GREEN}bdo help${NC}"

@@ -52,21 +52,13 @@ jobs:
           && sudo apt update \
           && sudo apt install gh -y
       
-      - name: Install cli from local package
-        run: |
-          cd $GITHUB_WORKSPACE
-          bpkg install . -g
-          echo "Installation completed with exit code: $?"
-          find /usr/local/bin -name bdo || echo "bdo not found in /usr/local/bin"
-          sudo find / -name bdo 2>/dev/null || echo "Could not find bdo anywhere"
-          echo "PATH=$PATH"
-          sudo ln -sf $(sudo find / -name bdo 2>/dev/null | head -1) /usr/local/bin/bdo || echo "Failed to create symlink"
+      - name: Install CLI directly
+        run: bpkg install hellobdo/bdo-cli -g
       
       - name: Test CLI basic functionality
         run: |
           export PATH=$PATH:/usr/local/bin
-          which bdo || echo "bdo not in PATH"
-          sudo -E bdo help || echo "Failed to run with sudo"
+          bdo help || echo "Failed to run bdo help"
           
   publish:
     runs-on: ubuntu-latest

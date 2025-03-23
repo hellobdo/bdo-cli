@@ -20,3 +20,7 @@ These tools must be installed on your system before attempting to install bdo-cl
 - `bdo push` - Add, commit, and push changes
 - `bdo branch <branch-name>` - Create and push a new branch
 - `bdo checkout` - Reset to match remote main branch
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
