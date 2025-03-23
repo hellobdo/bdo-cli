@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "BDO CLI tool for Git, GitHub, and development workflows",
   "global": true,
-  "install": "install -d ${PREFIX:-/usr/local}/bin ${PREFIX:-/usr/local}/lib/bdo-cli && cp -f bin/bdo-cli ${PREFIX:-/usr/local}/bin/bdo && cp -rf scripts ${PREFIX:-/usr/local}/lib/bdo-cli/ && chmod +x ${PREFIX:-/usr/local}/bin/bdo",
+  "install": "make install",
   "scripts": [
     "scripts/create.sh",
     "scripts/push.sh",
@@ -12,7 +12,8 @@
   ],
   "files": [
     "bin/bdo-cli",
-    "scripts"
+    "scripts",
+    "Makefile"
   ],
   "dependencies": {
     "git": ">=2.0.0",

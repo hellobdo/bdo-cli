@@ -1,4 +1,4 @@
- name: CI/CD Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -45,3 +45,20 @@ jobs:
         run: |
           bdo help
           which bdo
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install jq
+        run: sudo apt-get install -y jq
+      
+      - name: Update package.json version
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG#v}
+          jq ".version = \"$VERSION\"" package.json > package.json.tmp
+          mv package.json.tmp package.json

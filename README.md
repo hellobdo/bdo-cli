@@ -15,11 +15,11 @@ BDO CLI provides a collection of helpful shell scripts for Git, GitHub, and deve
 ## Available Commands
 
 ### Core Commands (no additional dependencies)
-- `bdo-cli list` - Show all available commands
-- `bdo-cli create <repo-name>` - Create and initialize a new repository
-- `bdo-cli push` - Add, commit, and push changes
-- `bdo-cli branch <branch-name>` - Create and push a new branch
-- `bdo-cli checkout` - Reset to match remote main branch
+- `bdo list` - Show all available commands
+- `bdo create <repo-name>` - Create and initialize a new repository
+- `bdo push` - Add, commit, and push changes
+- `bdo branch <branch-name>` - Create and push a new branch
+- `bdo checkout` - Reset to match remote main branch
 
 ## Development
 
