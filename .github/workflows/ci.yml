@@ -60,6 +60,23 @@ jobs:
           export PATH=$PATH:/usr/local/bin
           bdo help || echo "Failed to run bdo help"
           
+      - name: Test CLI removal functionality
+        run: |
+          echo "y" | bdo remove
+          if command -v bdo &> /dev/null; then
+            echo "Error: bdo command still exists after removal"
+            exit 1
+          else
+            echo "✅ bdo-cli successfully removed"
+          fi
+          
+          if [ -d "$HOME/.local/lib/bdo-cli" ]; then
+            echo "Error: bdo-cli library directory still exists after removal"
+            exit 1
+          else
+            echo "✅ bdo-cli library directory successfully removed"
+          fi
+          
   publish:
     runs-on: ubuntu-latest
     needs: test
