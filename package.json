@@ -1,0 +1,23 @@
+{
+  "name": "bdo-cli",
+  "version": "1.0.0",
+  "description": "BDO CLI tool for Git, GitHub, and development workflows",
+  "global": true,
+  "install": "install -d ${PREFIX:-/usr/local}/bin ${PREFIX:-/usr/local}/lib/bdo-cli && cp -f bin/bdo-cli ${PREFIX:-/usr/local}/bin/bdo && cp -rf scripts ${PREFIX:-/usr/local}/lib/bdo-cli/ && chmod +x ${PREFIX:-/usr/local}/bin/bdo",
+  "scripts": [
+    "scripts/create.sh",
+    "scripts/push.sh",
+    "scripts/branch.sh",
+    "scripts/checkout.sh"
+  ],
+  "files": [
+    "bin/bdo-cli",
+    "scripts"
+  ],
+  "dependencies": {
+    "git": ">=2.0.0",
+    "gh": ">=2.0.0"
+  },
+  "homepage": "https://github.com/hellobdo/bdo-cli",
+  "license": "MIT"
+} 
