@@ -7,7 +7,7 @@ BDO CLI provides a collection of helpful shell scripts for Git, GitHub, and deve
 ```bash
 # One-line installer (installs bpkg if needed)
 curl -Lo- https://raw.githubusercontent.com/hellobdo/bdo-cli/main/install-with-bpkg.sh | bash
-``
+```
 
 ## Requirements
 
