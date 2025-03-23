@@ -1,21 +1,19 @@
 #!/bin/bash
 
-# Debugging: Show received arguments
+# Get the current branch name
 BRANCH_NAME=$(git branch --show-current)
 
-# Prevent deleting 'main' by mistake
-if [[ "$BRANCH_NAME" == "main" ]]; then
-  echo "You are already on 'main'. Cannot delete 'main' branch."
-  exit 1
+# Make sure we're not on main branch
+if [ "$BRANCH_NAME" = "main" ] || [ "$BRANCH_NAME" = "master" ]; then
+    echo "You are already on the main branch."
+    exit 0
 fi
-
-echo "Switching to main and deleting branch: $BRANCH_NAME"
 
 # Switch to main branch
 git switch main || { echo "Failed to switch to main"; exit 1; }
 
 # Deletes the local branch
-git branch -d $BRANCH_NAME
+git branch -d "$BRANCH_NAME"
 
 # Ensure main is up-to-date
 git fetch origin
