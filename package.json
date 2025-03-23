@@ -15,10 +15,7 @@
     "scripts",
     "Makefile"
   ],
-  "dependencies": {
-    "git": ">=2.0.0",
-    "gh": ">=2.0.0"
-  },
+  "dependencies": {},
   "homepage": "https://github.com/hellobdo/bdo-cli",
   "license": "MIT"
 } 

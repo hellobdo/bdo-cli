@@ -4,13 +4,13 @@ BDO CLI provides a collection of helpful shell scripts for Git, GitHub, and deve
 
 ## Installation
 
+## Requirements
 
+Before installing, ensure you have the following prerequisites:
+- **Git**: For repository operations
+- **GitHub CLI**: For GitHub operations
 
-## Dependencies
-
-### Required Dependencies
-- Git - For repository operations
-- GitHub CLI (`gh`) - For GitHub operations
+These tools must be installed on your system before attempting to install bdo-cli.
 
 ## Available Commands
 
