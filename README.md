@@ -9,15 +9,6 @@ BDO CLI provides a collection of helpful shell scripts for Git, GitHub, and deve
 curl -Lo- https://raw.githubusercontent.com/hellobdo/bdo-cli/main/install-with-bpkg.sh | bash
 ```
 
-## Uninstallation
-
-To remove bdo-cli from your system:
-
-```bash
-# Uninstall using bpkg
-bpkg drop bdo-cli -g
-```
-
 ## Requirements
 
 Before installing, ensure you have the following prerequisites:
