@@ -1,4 +1,4 @@
-# bdo-cli
+# bdo-cli <img src="./assets/bdo-cli.svg" alt="Logo" width="20" />
 
 bdo-cli provides a collection of helpful shell scripts for Git, GitHub, and development workflows.
 
