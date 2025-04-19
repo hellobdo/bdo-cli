@@ -1,6 +1,6 @@
-# BDO CLI
+# bdo-cli
 
-BDO CLI provides a collection of helpful shell scripts for Git, GitHub, and development workflows.
+bdo-cli provides a collection of helpful shell scripts for Git, GitHub, and development workflows.
 
 ## Installation
 
