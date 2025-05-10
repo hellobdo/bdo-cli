@@ -24,7 +24,6 @@ These tools must be installed on your system before attempting to install bdo-cl
 - `bdo push` - Add, commit, and push changes
 - `bdo branch <branch-name>` - Create and push a new branch
 - `bdo checkout` - Reset to match remote main branch
-- `bdo remove` - Uninstall bdo-cli from your system
 
 ## Uninstallation
 
