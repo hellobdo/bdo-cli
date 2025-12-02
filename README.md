@@ -14,6 +14,7 @@ curl -Lo- https://raw.githubusercontent.com/hellobdo/bdo-cli/main/install-with-b
 Before installing, ensure you have the following prerequisites:
 - **Git**: For repository operations
 - **GitHub CLI**: For GitHub operations
+- **Direnv Allow**: Making direnvs
 
 These tools must be installed on your system before attempting to install bdo-cli.
 
@@ -24,6 +25,7 @@ These tools must be installed on your system before attempting to install bdo-cl
 - `bdo push` - Add, commit, and push changes
 - `bdo branch <branch-name>` - Create and push a new branch
 - `bdo checkout` - Reset to match remote main branch
+- `bdo mkenvrc` - Creates a envrc file in folder and runs direnv allow
 
 ## Uninstallation
 

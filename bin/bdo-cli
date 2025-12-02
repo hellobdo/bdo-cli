@@ -16,7 +16,8 @@ show_help() {
     echo "  ${CLI_NAME} create <repo-name> - Create and initialize a new repository"
     echo "  ${CLI_NAME} push - Add, commit, and push changes"
     echo "  ${CLI_NAME} branch <branch-name> - Create and push a new branch"
-    echo "  ${CLI_NAME} checkout - Reset to match remote main branch"
+    echo "  ${CLI_NAME} checkout - Reset to match remote main branch"    
+    echo "  ${CLI_NAME} mkenvrc - Create a envrc file in root"
     echo "  ${CLI_NAME} remove - Uninstall ${CLI_NAME} from your system"
     echo "  ${CLI_NAME} help - Show this help message"
 }
@@ -41,6 +42,9 @@ case "$1" in
         ;;
     "checkout")
         bash "${SCRIPTS_DIR}/checkout.sh"
+        ;;
+    "mkenvrc")
+        bash "${SCRIPTS_DIR}/mkenvrc.sh"
         ;;
     "remove")
         bash "${SCRIPTS_DIR}/remove.sh"

@@ -13,14 +13,21 @@ REPO_NAME="bdo-cli"
 echo -e "${YELLOW}Installing bdo-cli using bpkg...${NC}"
 
 # Check for Git
-if ! command -v git &> /dev/null; then
+if ! command -v git version &> /dev/null; then
     echo -e "${RED}Git is required but not installed.${NC}"
     exit 1
 fi
 
 # Check for GitHub CLI
-if ! command -v gh &> /dev/null; then
+if ! command -v gh version &> /dev/null; then
     echo -e "${RED}GitHub CLI is required but not installed.${NC}"
+    exit 1
+fi
+
+
+# Check for Direnv
+if ! command -v direnv version &> /dev/null; then
+    echo -e "${RED}Direnv is required but not installed.${NC}"
     exit 1
 fi
 
